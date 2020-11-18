@@ -17,5 +17,9 @@ class LoginController extends Controller
             'email' => 'required|email',
             'password' => 'required'
         ]);
+
+        auth()->attempt($request->only('email', 'password'));
+
+        return redirect()->route('dashboard');
     }
 }
