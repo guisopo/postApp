@@ -26,8 +26,10 @@ class PostController extends Controller
     }
 
     public function destroy(Post $post) {
-        $post->delete();
+        $this->authorize('delete', $post);
 
+        $post->delete();
+        
         return back();
     }
 }
