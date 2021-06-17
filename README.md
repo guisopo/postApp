@@ -6,56 +6,145 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
 </p>
+# Tectonica Webpack Starter Theme 🚀
+A minimal Wordpress theme with a basic Webpack configuration.
 
-## About Laravel
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## npm scripts
++ __`$ npm run build`:__ build production version of script.
++ __`$ npm run dev`:__ build developement version of script and watch for changes.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## Setup
 
-## Learning Laravel
+### Developement
+To start a project follow the next steps:
+1. Save the starter theme in the __themes__ folder from your Wordpress installation (wp-content > themes).
+2. In the terminal, navigate to the theme folder and run `$ npm i`.
+3. Set `WP_DEBUG = true` in the __wp-config.php__ file.
+4. Run `$ npm run start`.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+Now we are ready to start developing the theme __but__ we should take care of some requirements:
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+  + __Styles:__ every style of the theme should be written inside the __styles folder__ (assets > src > styles). When creating a new SCSS file remember to import it inside the __main.scss__ file, otherwise the style changes won't be applied to the theme.
 
-## Laravel Sponsors
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+  + __Fonts:__ every font __must__ be saved in the __fonts folder__ (assets > src > fonts). Then, in the assets-loader.js file (assets > src > js) import each of them individially.
 
-### Premium Partners
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[OP.GG](https://op.gg)**
+  + __Javascript:__ every new javascript file should be created inside de __js folder__ (assets > src > js) and then imported in the main.js file.
 
-## Contributing
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+  + __style.css:__ this file __must__ and __just__ include the details about the theme in the form of comments. No two themes are allowed to have the same details listed in their comment headers, as this will lead to problems in the theme selection dialog. We should make sure we change this information as soon as we start the project.
 
-## Code of Conduct
+### Deployment
+To deploy a theme follow the next steps:
+1. In the terminal go to the theme folder. Then run `$ npm run build`.
+2. Open the __wp-config.php__ file and set `WP_DEBUG = false`.
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+Now the theme will load minified assets from the __dist__ folder and is ready to be deployed.
 
-## Security Vulnerabilities
+## Theme Structure
++ __assets:__
+  + __dist:__ compiled files to be used in production mode.
+  + __src:__ original files used during development mode.
+    + __js:__ javascript files.
+    + __styles:__ folder with the SCSS files.
+    + __images:__ image files.
+    + __fonts:__ font files.
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
 
-## License
++ __inc:__ function files.
+  + __cleanup.php:__ to remove undesired stuff that Wordpress loads by default.
+  + __enqueue.php:__ to enqueue the theme javascript and styles files.
+  + __menu-management.php:__ to create the theme menus.
+  + __helpers.php:__ to add the theme custom functions.
+  + __theme-support.php:__ to add the different theme supports that Wordpress offers for the current theme.
+  
+  
++ __static:__ static files.
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
++ __.gitignore:__ ignore node_modules and other files when commiting.
+
+
++ __footer.php__
+
+
++ __functions.php:__ file that retrieves all the files from inc folder.
+
+
++ __index.php__ 
+
+
++ __header.php__
+
+
++ __package.json__
+
+
++ __readme.md__
+
+
++ __screenshot.png:__ the theme screenshot. Wordpress will use it as the preview of the theme. The recomended size according to the Wordpress Codex is 1200×900px.
+
+
++ __style.css:__ file with the Wordpress theme information.
+
+
++ __webpack.common.js:__ file the shared options.
+
+
++ __webpack.dev.js:__ file witht the configuration for development mode.
+
+
++ __webpack.prod.js:__ file witht the configuration for production mode.
+
+
+## Webpack Dependencies
+
+| Name             | Description                                                        |
+| ---------------- | ------------------------------------------------------------------ |
+| [css-loader] | interprets @import and url() like import/require() and will resolve them. |
+| [css-minimizer-webpack-plugin] |  uses cssnano to optimize and minify your CSS. |
+| [image-minimizer-webpack-plugin] | optimize (compress) all images using imagemin. |
+| [imagemin-gifsicle] | to optimize gif files |
+| [imagemin-jpegtran] | to optimize jpg and jpeg files |
+| [imagemin-optipng] | to optimize png files |
+| [imagemin-svgo] | to optimize svg files |
+| [mini-css-extract-plugin] | extracts CSS into separate files. It creates a CSS file per JS file which contains CSS. |
+| [sass] | It provides a command-line sass executable and a Node.js API. |
+| [sass-loader] | Loads a Sass/SCSS file and compiles it to CSS. |
+| [style-loader] | Inject CSS into the DOM. |
+| [webpack-dev-server] | Use webpack with a development server that provides live reloading. This should be used for __development__ only. |
+| [webpack-merge] | provides a merge function that concatenates arrays and merges objects creating a new objec. |
+
+[css-loader]: https://www.npmjs.com/package/css-loader
+[css-minimizer-webpack-plugin]: https://www.npmjs.com/package/css-minimizer-webpack-plugin
+[image-minimizer-webpack-plugin]: https://www.npmjs.com/package/image-minimizer-webpack-plugin
+[imagemin-gifsicle]: https://www.npmjs.com/package/imagemin-gifsicle
+[imagemin-jpegtran]: https://www.npmjs.com/package/imagemin-jpegtran
+[imagemin-optipng]: https://www.npmjs.com/package/imagemin-optipng
+[imagemin-svgo]: https://www.npmjs.com/package/imagemin-svgo
+[mini-css-extract-plugin]: https://www.npmjs.com/package/mini-css-extract-plugin
+[sass]: https://www.npmjs.com/package/sass
+[sass-loader]: https://www.npmjs.com/package/sass-loader
+[style-loader]: https://www.npmjs.com/package/style-loader
+[webpack-dev-server]: https://www.npmjs.com/package/webpack-dev-server
+[webpack-merge]: https://www.npmjs.com/package/webpack-merge
+
+
+
+## TO DO
+- [x] Load Fonts
+- [x] Create a SCSS 7-1 pattern structure
+- [x] Finish _style.css_ Wordpress Theme Information
+- [x] Optimize Images
+- [x] Inc: Add php files
+- [x] Styles: Add Bootstrap 5
+- [ ] Styles: Bootstrap tree-shacking?_? improve way of loading it
+- [ ] Add Babel Javascript compiler
+
+
+## Copyright and License
+This version is under the [GPLv2 or later](https://www.gnu.org/licenses/)
